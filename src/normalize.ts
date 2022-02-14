@@ -1,50 +1,33 @@
 export class NormalizedData<T> {
-    uniq: string;
-    ids: {
-        [key: string]: T;
-    };
-    order: any[];
+    constructor(
+        public uniq: string,
+        public ids: {
+            [key: string]: T;
+        },
+        public order: any[]
+    ) {
+    }
 
+    getOne(id: any): T {
+        return this.ids[id];
+    }
 
+    updateOne(item: T) {
+        return Normalize.merge(this, Normalize.toData([item]));
+    }
 
+    append(items: T[]) {
+        return Normalize.merge(this, Normalize.toData(items));
+    }
 
-
-    // updateData() {
-    //     return this.repository.loadData().pipe(
-    //         tap(response => {
-    //             this.store.setState({
-    //                 ...this.store.state,
-    //                 items: Normalize.toData(response)
-    //             });
-    //         })
-    //     );
-    // }
-
-    // updateOne(item: Item) {
-    //     this.store.setState({
-    //         ...this.store.state,
-    //         items: Normalize.merge(this.store.state.items, Normalize.toData([item]))
-    //     });
-    // }
-
-    // removeOne(id: number) {
-    //     this.store.setState({
-    //         ...this.store.state,
-    //         items: Normalize.remove(this.store.state.items, id)
-    //     });
-    // }
-
-    // appendItems(items: Item[]) {
-    //     this.store.setState({
-    //         ...this.store.state,
-    //         items: Normalize.merge(this.store.state.items, Normalize.toData(items))
-    //     });
-    // }
+    removeOne(id: any) {
+        return Normalize.remove(this, id);
+    }
 }
 
 export class Normalize {
-    static get empty() {
-        return { ids: {}, order: [], uniq: 'id' };
+    static empty<T>(uniq: string = 'id'): NormalizedData<T> {
+        return new NormalizedData(uniq, {}, []);
     }
 
     static toData<T>(data: Array<any>, uniq: string = 'id'): NormalizedData<T> {
@@ -55,7 +38,7 @@ export class Normalize {
                 entity.ids[id] = item;
                 entity.order.push(id);
                 return entity;
-            }, Normalize.empty);
+            }, Normalize.empty(uniq));
     }
 
     static toList<T>(data: NormalizedData<T>): Array<T> {
@@ -70,17 +53,17 @@ export class Normalize {
             throw new Error("Unable to merge. Uniq fields doesn't match");
         }
 
-        return {
-            uniq: data1.uniq,
-            ids: {
+        return new NormalizedData(
+            data1.uniq,
+            {
                 ...data1.ids,
                 ...data2.ids
             },
-            order: []
+            []
                 .concat(data1.order)
                 .concat(data2.order)
                 .filter((a, i, arr) => arr.indexOf(a) === i)
-        };
+        );
     }
 
     static remove<T>(data: NormalizedData<T>, id: any) {

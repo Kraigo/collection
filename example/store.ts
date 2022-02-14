@@ -1,6 +1,6 @@
 import { Observable, map } from "rxjs";
 import { Normalize } from "../src/normalize";
-import { Store } from "../src/utils";
+import { Store } from "./utils";
 import { FeatureState, Item } from "./models";
 
 export class FeatureStore extends Store<FeatureState> {
@@ -10,7 +10,7 @@ export class FeatureStore extends Store<FeatureState> {
   
     constructor() {
       super({
-        items: Normalize.empty,
+        items: Normalize.empty(),
         loading: false
       });
     }

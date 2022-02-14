@@ -19,23 +19,26 @@ export class Effect {
     }
 
     updateOne(item: Item) {
+        const {state} = this.store;
         this.store.setState({
-            ...this.store.state,
-            items: Normalize.merge(this.store.state.items, Normalize.toData([item]))
+            ...state,
+            items: state.items.updateOne(item)
         });
     }
 
     removeOne(id: number) {
+        const {state} = this.store;
         this.store.setState({
-            ...this.store.state,
-            items: Normalize.remove(this.store.state.items, id)
+            ...state,
+            items: state.items.removeOne(id)
         });
     }
 
     appendItems(items: Item[]) {
+        const {state} = this.store;
         this.store.setState({
-            ...this.store.state,
-            items: Normalize.merge(this.store.state.items, Normalize.toData(items))
+            ...state,
+            items: state.items.append(items)
         });
     }
 }
