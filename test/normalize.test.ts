@@ -1,6 +1,6 @@
 import test from 'ava';
 import { Item } from '../example/models';
-import { NormalizedData, Normalize } from '../src/normalize';
+import { NormalizedData, Normalize } from '../src';
 
 test('init values', t => {
     let data: NormalizedData<Item> = Normalize.empty();
@@ -45,6 +45,29 @@ test('update', t => {
     t.true(newItem.id === item.id);
     t.true(newItem.name === item.name);
 });
+
+test('update many', t => {
+    let data: NormalizedData<Item> = Normalize.empty();
+    const order = [1,2,3];
+    data = data.append(
+        order.map(id => {
+            return {id: id, name: `Test ${id}`}
+        })
+    );
+
+    data = data.update(
+        order.map(id => {
+            return {id: id, name: `New ${id}`}
+        })
+    );
+    const items = Normalize.toList(data);
+    t.is(items.length, 3);
+
+    for (let i of items) {
+        t.true(i.name.startsWith('New'))
+    }
+});
+
 
 test('update will append if not exist??', t => {
     let data: NormalizedData<Item> = Normalize.empty();

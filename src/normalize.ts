@@ -1,29 +1,4 @@
-export class NormalizedData<T> {
-    constructor(
-        public uniq: string,
-        public ids: {
-            [key: string]: T;
-        },
-        public order: any[]
-    ) {
-    }
-
-    getOne(id: any): T {
-        return this.ids[id];
-    }
-
-    updateOne(item: T) {
-        return Normalize.merge(this, Normalize.toData([item]));
-    }
-
-    append(items: T[]) {
-        return Normalize.merge(this, Normalize.toData(items));
-    }
-
-    removeOne(id: any) {
-        return Normalize.remove(this, id);
-    }
-}
+import { NormalizedData } from "./normalize-data";
 
 export class Normalize {
     static empty<T>(uniq: string = 'id'): NormalizedData<T> {
