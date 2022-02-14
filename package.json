@@ -1,0 +1,33 @@
+{
+    "name": "normalize",
+    "version": "1.0.0",
+    "description": "Normalize data",
+    "main": "index.js",
+    "scripts": {
+        "build": "tsc --build",
+        "test": "ava"
+    },
+    "keywords": [
+        "normalize",
+        "data"
+    ],
+    "author": "Kraigo",
+    "license": "ISC",
+    "dependencies": {
+        "rxjs": "^7.5.4",
+        "tsc": "^2.0.4"
+    },
+    "devDependencies": {
+        "ava": "^4.0.1",
+        "ts-node": "^10.5.0",
+        "typescript": "^4.5.5"
+    },
+    "ava": {
+        "extensions": [
+            "ts"
+        ],
+        "require": [
+            "ts-node/register"
+        ]
+    }
+}
