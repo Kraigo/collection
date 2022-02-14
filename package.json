@@ -2,20 +2,26 @@
     "name": "normalize",
     "version": "1.0.0",
     "description": "Normalize data",
-    "main": "index.js",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "scripts": {
-        "build": "tsc --build",
-        "test": "ava"
+        "build": "tsc",
+        "prepublish": "build",
+        "test": "ava",
+        "main": "dist/index.js",
+        "types": "dist/index.d.ts"
     },
     "keywords": [
         "normalize",
         "data"
     ],
+    "files": [
+        "/dist"
+    ],
     "author": "Kraigo",
     "license": "ISC",
     "dependencies": {
-        "rxjs": "^7.5.4",
-        "tsc": "^2.0.4"
+        "rxjs": "^7.5.4"
     },
     "devDependencies": {
         "ava": "^4.0.1",
