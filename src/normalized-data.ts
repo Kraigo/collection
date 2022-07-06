@@ -37,4 +37,12 @@ export class NormalizedData<T> {
     clear() {
         return Normalized.empty();
     }
+
+    toList() {
+        return Normalized.toList(this);
+    }
+
+    toJSON() {
+        return this.toList();
+    }
 }

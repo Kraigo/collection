@@ -49,4 +49,22 @@ export class Normalized {
         items.splice(index, 1);
         return Normalized.toData<T>(items, data.uniq);
     }
+
+    static parse<T>(data: NormalizedData<T> | any[] | string): NormalizedData<T> {
+        if (typeof data === 'string') {
+            try {
+                return Normalized.parse(JSON.parse(data));
+            } catch(e) {
+                return Normalized.empty();
+            }
+        }
+
+        if (data instanceof NormalizedData) {
+            return data;
+        }
+
+        if (Array.isArray(data)) {
+            return Normalized.toData(data);
+        }
+    }
 }
