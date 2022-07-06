@@ -1,6 +1,6 @@
-import { NormalizedData } from "./normalize-data";
+import { NormalizedData } from "./normalized-data";
 
-export class Normalize {
+export class Normalized {
     static empty<T>(uniq: string = 'id'): NormalizedData<T> {
         return new NormalizedData(uniq, {}, []);
     }
@@ -13,7 +13,7 @@ export class Normalize {
                 entity.ids[id] = item;
                 entity.order.push(id);
                 return entity;
-            }, Normalize.empty(uniq));
+            }, Normalized.empty(uniq));
     }
 
     static toList<T>(data: NormalizedData<T>): Array<T> {
@@ -45,8 +45,8 @@ export class Normalize {
         const index = data.order.indexOf(id);
         if (index < 0) return data;
 
-        const items = Normalize.toList(data);
+        const items = Normalized.toList(data);
         items.splice(index, 1);
-        return Normalize.toData<T>(items, data.uniq);
+        return Normalized.toData<T>(items, data.uniq);
     }
 }

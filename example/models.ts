@@ -1,4 +1,4 @@
-import { NormalizedData } from "../src/normalize";
+import { NormalizedData } from "../src"
 
 export interface Item {
     id: number;

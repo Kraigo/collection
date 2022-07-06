@@ -1,4 +1,4 @@
-import { Normalize } from "./normalize";
+import { Normalized } from "./normalized";
 
 export class NormalizedData<T> {
     constructor(
@@ -15,7 +15,7 @@ export class NormalizedData<T> {
     }
 
     update(items: T[]) {
-        return Normalize.merge(this, Normalize.toData(items));
+        return Normalized.merge(this, Normalized.toData(items));
     }
 
     updateOne(item: T) {
@@ -23,7 +23,7 @@ export class NormalizedData<T> {
     }
 
     append(items: T[]) {
-        return Normalize.merge(this, Normalize.toData(items));
+        return Normalized.merge(this, Normalized.toData(items));
     }
 
     appendOne(item: T) {
@@ -31,10 +31,10 @@ export class NormalizedData<T> {
     }
 
     removeOne(id: any) {
-        return Normalize.remove(this, id);
+        return Normalized.remove(this, id);
     }
 
     clear() {
-        return Normalize.empty();
+        return Normalized.empty();
     }
 }

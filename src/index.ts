@@ -1,2 +1,2 @@
-export * from './normalize';
-export * from './normalize-data';
+export * from './normalized';
+export * from './normalized-data';
