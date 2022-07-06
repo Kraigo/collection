@@ -45,4 +45,7 @@ export class NormalizedData<T> {
     toJSON() {
         return this.toList();
     }
+    total(): number {
+        return this.order.length;
+    }
 }
