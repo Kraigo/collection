@@ -1,6 +1,6 @@
 {
-    "name": "normalize",
-    "version": "1.0.0",
+    "name": "normalized-data",
+    "version": "1.0.1",
     "description": "Normalize data",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -19,6 +19,7 @@
         "/dist"
     ],
     "author": "Kraigo",
+    "repository": "https://github.com/Kraigo/normalize",
     "license": "ISC",
     "dependencies": {
         "rxjs": "^7.5.4"
