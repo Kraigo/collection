@@ -66,5 +66,7 @@ export class Normalized {
         if (Array.isArray(data)) {
             return Normalized.toData(data);
         }
+
+        return Normalized.empty();
     }
 }
