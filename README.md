@@ -7,7 +7,7 @@ const items = [
     { id: 2, name: 'test2' }
 ]
 
-let collection = Normalize.toData(items);
+let collection = Collection.toData(items);
 
 
 collection = collection.updateOne({id: 2, name: 'Updated name'});
