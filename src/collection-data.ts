@@ -1,6 +1,6 @@
-import { Normalized } from "./normalized";
+import { Collection } from "./collection";
 
-export class NormalizedData<T> {
+export class CollectionData<T> {
     constructor(
         public uniq: string,
         public ids: {
@@ -15,7 +15,7 @@ export class NormalizedData<T> {
     }
 
     update(items: T[]) {
-        return Normalized.merge(this, Normalized.toData(items));
+        return Collection.merge(this, Collection.toData(items));
     }
 
     updateOne(item: T) {
@@ -23,7 +23,7 @@ export class NormalizedData<T> {
     }
 
     append(items: T[]) {
-        return Normalized.merge(this, Normalized.toData(items));
+        return Collection.merge(this, Collection.toData(items));
     }
 
     appendOne(item: T) {
@@ -31,15 +31,15 @@ export class NormalizedData<T> {
     }
 
     removeOne(id: any) {
-        return Normalized.remove(this, id);
+        return Collection.remove(this, id);
     }
 
     clear() {
-        return Normalized.empty();
+        return Collection.empty();
     }
 
     toList() {
-        return Normalized.toList(this);
+        return Collection.toList(this);
     }
 
     toJSON() {

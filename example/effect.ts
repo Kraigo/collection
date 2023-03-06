@@ -1,5 +1,5 @@
 import { tap } from "rxjs";
-import { Normalize } from "../src/normalize";
+import { Collection } from "../src/collection";
 import { Item } from "./models";
 import { Repository } from "./repository";
 import { FeatureStore } from "./store";
@@ -12,7 +12,7 @@ export class Effect {
             tap(response => {
                 this.store.setState({
                     ...this.store.state,
-                    items: Normalize.toData(response)
+                    items: Collection.toData(response)
                 });
             })
         );

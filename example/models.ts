@@ -1,4 +1,4 @@
-import { NormalizedData } from "../src"
+import { CollectionData } from "../src"
 
 export interface Item {
     id: number;
@@ -6,6 +6,6 @@ export interface Item {
 }
   
 export interface FeatureState {
-    items: NormalizedData<Item>;
+    items: CollectionData<Item>;
     loading: boolean;
 }

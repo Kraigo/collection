@@ -1,7 +1,7 @@
 {
-    "name": "normalized-data",
+    "name": "collection-data",
     "version": "1.1.6",
-    "description": "Normalize data",
+    "description": "Collection data",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
@@ -12,14 +12,14 @@
         "types": "dist/index.d.ts"
     },
     "keywords": [
-        "normalize",
+        "collection",
         "data"
     ],
     "files": [
         "/dist"
     ],
     "author": "Kraigo",
-    "repository": "https://github.com/Kraigo/normalize",
+    "repository": "https://github.com/Kraigo/collection",
     "license": "ISC",
     "dependencies": {
         "rxjs": "^7.5.4"

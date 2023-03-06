@@ -1,4 +1,4 @@
-This library helps to keep normalized data, update collection.
+This library helps to keep collection data, update collection.
 
 
 ```
@@ -7,14 +7,14 @@ const items = [
     { id: 2, name: 'test2' }
 ]
 
-let normalized = Normalize.toData(items);
+let collection = Normalize.toData(items);
 
 
-normalized = normalized.updateOne({id: 2, name: 'Updated name'});
-normalized = normalized.removeOne(2);
-normalized = normalized.append({id: 3, name: 'test3'});
+collection = collection.updateOne({id: 2, name: 'Updated name'});
+collection = collection.removeOne(2);
+collection = collection.append({id: 3, name: 'test3'});
 
-const list = normalized.toList();
+const list = collection.toList();
 ```
 
 
