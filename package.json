@@ -1,7 +1,7 @@
 {
-    "name": "collection-data",
+    "name": "list-collection",
     "version": "1.1.6",
-    "description": "Collection data",
+    "description": "list-collection",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
@@ -13,6 +13,8 @@
     },
     "keywords": [
         "collection",
+        "list",
+        "normalization",
         "data"
     ],
     "files": [
