@@ -10,12 +10,15 @@ export class CollectionData<T> {
     ) {
     }
 
-    getOne(id: any): T {
-        return this.ids[id];
+    getOne(id: any): T | null {
+        return id in this.ids
+            ? this.ids[id]
+            : null;
     }
 
     update(items: T[]) {
-        return Collection.merge(this, Collection.toData(items));
+        items = items.filter(item => this.order.includes(item[this.uniq]))
+        return Collection.merge(this, Collection.toData(items, this.uniq));
     }
 
     updateOne(item: T) {
@@ -23,7 +26,7 @@ export class CollectionData<T> {
     }
 
     append(items: T[]) {
-        return Collection.merge(this, Collection.toData(items));
+        return Collection.merge(this, Collection.toData(items, this.uniq));
     }
 
     appendOne(item: T) {
@@ -45,7 +48,8 @@ export class CollectionData<T> {
     toJSON() {
         return this.toList();
     }
-    total(): number {
+
+    get total(): number {
         return this.order.length;
     }
 }

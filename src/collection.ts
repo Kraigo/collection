@@ -5,7 +5,7 @@ export class Collection {
         return new CollectionData(uniq, {}, []);
     }
 
-    static toData<T>(data: Array<any>, uniq: string = 'id'): CollectionData<T> {
+    static toData<T>(data: Array<T>, uniq: string = 'id'): CollectionData<T> {
         return data
             .filter(item => item != null)
             .reduce((entity, item) => {
@@ -13,7 +13,7 @@ export class Collection {
                 entity.ids[id] = item;
                 entity.order.push(id);
                 return entity;
-            }, Collection.empty(uniq));
+            }, Collection.empty<T>(uniq));
     }
 
     static toList<T>(data: CollectionData<T>): Array<T> {
@@ -54,7 +54,7 @@ export class Collection {
         if (typeof data === 'string') {
             try {
                 return Collection.parse(JSON.parse(data));
-            } catch(e) {
+            } catch (e) {
                 return Collection.empty();
             }
         }

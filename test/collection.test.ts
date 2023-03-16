@@ -1,5 +1,5 @@
 import test from 'ava';
-import { Item } from '../example/models';
+import { Item, Item2 } from '../example/models';
 import { CollectionData, Collection } from '../src';
 
 test('init values', t => {
@@ -27,10 +27,10 @@ test('append', t => {
 
 test('update', t => {
     let data: CollectionData<Item> = Collection.empty();
-    const order = [1,2,3];
+    const order = [1, 2, 3];
     data = data.append(
         order.map(id => {
-            return {id: id, name: `Test ${id}`}
+            return { id: id, name: `Test ${id}` }
         })
     );
     const item = {
@@ -42,22 +42,22 @@ test('update', t => {
     const items = Collection.toList(data);
     t.is(items.length, 3);
     const newItem = data.getOne(item.id);
-    t.true(newItem.id === item.id);
-    t.true(newItem.name === item.name);
+    t.true(newItem?.id === item.id);
+    t.true(newItem?.name === item.name);
 });
 
 test('update many', t => {
     let data: CollectionData<Item> = Collection.empty();
-    const order = [1,2,3];
+    const order = [1, 2, 3];
     data = data.append(
         order.map(id => {
-            return {id: id, name: `Test ${id}`}
+            return { id: id, name: `Test ${id}` }
         })
     );
 
     data = data.update(
         order.map(id => {
-            return {id: id, name: `New ${id}`}
+            return { id: id, name: `New ${id}` }
         })
     );
     const items = Collection.toList(data);
@@ -68,25 +68,44 @@ test('update many', t => {
     }
 });
 
+test('update many with uniq key', t => {
+    var source = [
+        { uniqId: 1, name: '1' },
+        { uniqId: 2, name: '2' },
+        { uniqId: 3, name: '3' }
+    ];
+    let data = Collection.toData(source, 'uniqId');
 
-test('update will append if not exist??', t => {
-    let data: CollectionData<Item> = Collection.empty();
-    const item = {
-        id: 1,
-        name: 'Test 1'
-    };
-    
-    data = data.updateOne(item);
-    const items = Collection.toList(data);
-    t.is(items.length, 1);
+    data = data.update([
+        { uniqId: 1, name: 'first' },
+        { uniqId: 2, name: 'second' },
+    ]);
+
+    t.is(data.getOne(1)?.name, 'first');
+    t.is(data.getOne(2)?.name, 'second');
+    t.is(data.getOne(3)?.name, '3');
+});
+
+test('update should not append', t => {
+    var source = [
+        { id: 1, name: '1' },
+    ];
+    let data = Collection.toData(source);
+
+    data = data.update([
+        { id: 1, name: 'first' },
+        { id: 2, name: 'second' }
+    ]);
+    t.is(data.getOne(2), null);
+    t.is(data.total, 1);
 });
 
 test('order', t => {
     let data: CollectionData<Item> = Collection.empty();
-    const order = [1,2,3];
+    const order = [1, 2, 3];
     data = data.append(
         order.map(id => {
-            return {id: id, name: `Test ${id}`}
+            return { id: id, name: `Test ${id}` }
         })
     );
 
@@ -99,10 +118,10 @@ test('order', t => {
 
 test('order after update', t => {
     let data: CollectionData<Item> = Collection.empty();
-    const order = [1,2,3];
+    const order = [1, 2, 3];
     data = data.append(
         order.map(id => {
-            return {id: id, name: `Test ${id}`}
+            return { id: id, name: `Test ${id}` }
         })
     );
 
@@ -120,11 +139,11 @@ test('order after update', t => {
 
 test('remove', t => {
     let data: CollectionData<Item> = Collection.empty();
-    const order = [1,2,3];
+    const order = [1, 2, 3];
     const id = 3;
     data = data.append(
         order.map(id => {
-            return {id: id, name: `Test ${id}`}
+            return { id: id, name: `Test ${id}` }
         })
     );
     data = data.removeOne(id);
@@ -136,18 +155,18 @@ test('remove', t => {
 
 test('toString', t => {
     var source = [
-        { id: 1, name: '1'},
-        { id: 2, name: '2'}
+        { id: 1, name: '1' },
+        { id: 2, name: '2' }
     ];
     let data: CollectionData<Item> = Collection.toData(source)
 
-    t.is(JSON.stringify(data), JSON.stringify(source));   
+    t.is(JSON.stringify(data), JSON.stringify(source));
 });
 
 test('parse', t => {
     var source = JSON.stringify([
-        { id: 1, name: '1'},
-        { id: 2, name: '2'}
+        { id: 1, name: '1' },
+        { id: 2, name: '2' }
     ]);
 
     let data: CollectionData<Item> = Collection.parse(source)
@@ -159,8 +178,8 @@ test('parse', t => {
 
 test('toList', t => {
     var source = [
-        { id: 1, name: '1'},
-        { id: 2, name: '2'}
+        { id: 1, name: '1' },
+        { id: 2, name: '2' }
     ];
     let data: CollectionData<Item> = Collection.toData(source);
 
@@ -172,4 +191,34 @@ test('toList', t => {
         t.is(items[i].id, source[i].id);
         t.is(items[i].name, source[i].name);
     }
+});
+
+test('use uniq key', t => {
+    var source = [
+        { uniqId: 1, name: '1' },
+        { uniqId: 2, name: '2' }
+    ];
+    let data = Collection.toData(source, 'uniqId');
+    data = data.removeOne(2);
+
+    t.is(data.getOne(2), null);
+    t.is(data.total, 1);
+
+});
+
+test('append with uniq key', t => {
+    var source1 = [
+        { uniqId: 1, name: '1' },
+        { uniqId: 2, name: '2' }
+    ];
+    var source2 = [
+        { uniqId: 2, name: '2+' },
+        { uniqId: 3, name: '3' },
+        { uniqId: 4, name: '4' }
+    ];
+    let data = Collection.toData(source1, 'uniqId');
+    data = data.append(source2)
+
+    t.is(data.total, 4);
+    t.is(data.getOne(2)?.name, '2+');
 });
